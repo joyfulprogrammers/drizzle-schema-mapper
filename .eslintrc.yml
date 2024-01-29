@@ -1,0 +1,30 @@
+env:
+  es2021: true
+  node: true
+extends:
+  - standard-with-typescript
+  - plugin:@typescript-eslint/recommended
+  - plugin:prettier/recommended
+parserOptions:
+  project: tsconfig.json
+  ecmaVersion: latest
+  sourceType: module
+rules:
+  semi:
+    - error
+    - always
+  import/order:
+    - error
+    - groups:
+        - builtin
+        - external
+        - - parent
+          - sibling
+        - index
+      alphabetize:
+        order: asc
+        caseInsensitive: true
+  '@typescript-eslint/no-extraneous-class': 0
+  '@typescript-eslint/no-explicit-any': 0
+  no-console:
+    - error
