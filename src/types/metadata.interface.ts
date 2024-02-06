@@ -7,7 +7,7 @@ export interface ColumnMetadata {
   columnName: string;
   propertyName: string;
   columnType: string;
-  transformer: ColumnTransformer<any, any>;
+  transformer?: ColumnTransformer<any, any>;
   isNullable: boolean;
   isAutoIncrement: boolean;
 }
@@ -21,7 +21,7 @@ export interface SchemaMetadata {
   tableName: string;
   schemaName: string;
   columns: ColumnMetadata[];
-  primaryKey: ConstraintMetadata;
+  primaryKey?: ConstraintMetadata;
   uniqueKeys: ConstraintMetadata[];
 }
 
