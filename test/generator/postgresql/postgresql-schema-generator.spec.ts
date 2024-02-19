@@ -48,7 +48,14 @@ describe("PostgresqlSchemaGenerator", () => {
               propertyName: "name",
               columnType: "varchar",
               isNullable: false,
-              isAutoIncrement: true,
+              isAutoIncrement: false,
+            },
+            {
+              columnName: "custom",
+              propertyName: "name",
+              columnType: "customType",
+              isNullable: false,
+              isAutoIncrement: false,
             },
           ],
           primaryKey: {
@@ -65,7 +72,7 @@ describe("PostgresqlSchemaGenerator", () => {
 
     // then
     expect(writer.result).toMatchInlineSnapshot(`
-      "import { pgTable, primaryKey, bigserial, varchar } from 'drizzle-orm/pg-core';
+      "import { pgTable, primaryKey, bigserial, varchar, customType } from 'drizzle-orm/pg-core';
       "
     `);
   });

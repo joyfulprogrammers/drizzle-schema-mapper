@@ -27,6 +27,15 @@ export class PostgresqlSchemaGenerator implements SchemaGenerator {
       return "";
     }
 
-    return `import { pgTable, ${schema.primaryKey != null ? "primaryKey, " : ""}${schema.columns.map((col) => col.columnType).join(", ")} } from 'drizzle-orm/pg-core';\n`;
+    const imports = [
+      "pgTable",
+      schema.primaryKey != null && "primaryKey",
+      ...schema.columns.map((col) => col.columnType),
+      schema.columns.find((c) => c.columnType === "customType")?.columnType,
+    ]
+      .filter(Boolean)
+      .join(", ");
+
+    return `import { ${imports} } from 'drizzle-orm/pg-core';\n`;
   }
 }
