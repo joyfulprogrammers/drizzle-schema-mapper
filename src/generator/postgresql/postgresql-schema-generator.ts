@@ -27,15 +27,15 @@ export class PostgresqlSchemaGenerator implements SchemaGenerator {
       return "";
     }
 
-    const imports = [
-      "pgTable",
-      schema.primaryKey != null && "primaryKey",
-      ...schema.columns.map((col) => col.columnType),
-      schema.columns.find((c) => c.columnType === "customType")?.columnType,
-    ]
-      .filter(Boolean)
-      .join(", ");
+    const importSet = new Set(
+      [
+        "pgTable",
+        schema.primaryKey != null && "primaryKey",
+        ...schema.columns.map((col) => col.columnType),
+        schema.columns.some((c) => c.transformer != null) && "customType",
+      ].filter(Boolean),
+    );
 
-    return `import { ${imports} } from 'drizzle-orm/pg-core';\n`;
+    return `import { ${[...importSet].join(", ")} } from 'drizzle-orm/pg-core';\n`;
   }
 }

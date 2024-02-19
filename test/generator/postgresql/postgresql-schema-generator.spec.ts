@@ -53,7 +53,11 @@ describe("PostgresqlSchemaGenerator", () => {
             {
               columnName: "custom",
               propertyName: "name",
-              columnType: "customType",
+              columnType: "varchar",
+              transformer: {
+                to: () => "",
+                from: () => "",
+              },
               isNullable: false,
               isAutoIncrement: false,
             },

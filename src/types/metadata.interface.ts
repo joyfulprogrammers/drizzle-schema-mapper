@@ -19,7 +19,7 @@ export interface ConstraintMetadata {
 export interface ColumnMetadata {
   columnName: string;
   propertyName: string;
-  columnType: PostgreSQLColumnType | MySQLColumnType | "customType";
+  columnType: PostgreSQLColumnType | MySQLColumnType;
   transformer?: ColumnTransformer<any, any>;
   isNullable: boolean;
   isAutoIncrement: boolean;
