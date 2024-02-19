@@ -76,8 +76,22 @@ describe("PostgresqlSchemaGenerator", () => {
 
     // then
     expect(writer.result).toMatchInlineSnapshot(`
-      "import { pgTable, primaryKey, bigserial, varchar, customType } from 'drizzle-orm/pg-core';
-      "
+      "export const user = pgTable(
+            'users',
+            {
+              id: bigserial('id').autoincrement(),
+      name: varchar('name'),
+      name: varchar('custom')
+            }
+            ,(table) => {
+            return {
+              pk_users: primaryKey({
+                name: 'pk_users'
+                columns: [table.id],
+              }),
+            }
+          }
+          )"
     `);
   });
 });
