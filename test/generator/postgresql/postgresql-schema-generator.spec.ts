@@ -13,7 +13,7 @@ describe("PostgresqlSchemaGenerator", () => {
     writer.clear();
   });
 
-  test("should do nothing if there is no schema", () => {
+  test("should do nothing if there is no schema", async () => {
     // given
     const ormMetadata: OrmMetadata = {
       databaseType: "pg",
@@ -21,13 +21,13 @@ describe("PostgresqlSchemaGenerator", () => {
     };
 
     // when
-    factory(ormMetadata).generate();
+    await factory(ormMetadata).generate();
 
     // then
     expect(writer.result).toBeUndefined();
   });
 
-  test("should include column type import", () => {
+  test("should include column type import", async () => {
     // given
     const ormMetadata: OrmMetadata = {
       databaseType: "pg",
@@ -72,26 +72,35 @@ describe("PostgresqlSchemaGenerator", () => {
     };
 
     // when
-    factory(ormMetadata).generate();
+    await factory(ormMetadata).generate();
 
     // then
     expect(writer.result).toMatchInlineSnapshot(`
-      "export const user = pgTable(
-            'users',
-            {
-              id: bigserial('id').autoincrement(),
-      name: varchar('name'),
-      name: varchar('custom')
-            }
-            ,(table) => {
-            return {
-              pk_users: primaryKey({
-                name: 'pk_users'
-                columns: [table.id],
-              }),
-            }
-          }
-          )"
+      "import {
+        pgTable,
+        primaryKey,
+        bigserial,
+        varchar,
+        customType,
+      } from "drizzle-orm/pg-core";
+
+      export const user = pgTable(
+        "users",
+        {
+          id: bigserial("id").autoincrement(),
+          name: varchar("name"),
+          name: varchar("custom"),
+        },
+        (table) => {
+          return {
+            pk_users: primaryKey({
+              name: "pk_users",
+              columns: [table.id],
+            }),
+          };
+        },
+      );
+      "
     `);
   });
 });

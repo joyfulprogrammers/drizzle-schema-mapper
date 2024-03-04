@@ -1,4 +1,6 @@
+import * as prettier from "prettier";
 import { type SchemaGenerator } from "../../types/generator.interface";
+
 import {
   type OrmMetadata,
   type SchemaMetadata,
@@ -11,18 +13,20 @@ export class PostgresqlSchemaGenerator implements SchemaGenerator {
     private readonly metaData: OrmMetadata,
   ) {}
 
-  generate(): void {
-    this.metaData.schemas.forEach((schema) => {
+  async generate(): Promise<void> {
+    for (const schema of this.metaData.schemas) {
       const writer = this.writerFactory.create(
         `${schema.schemaName}.schema.ts`,
       );
 
       const importText = this.generateImport(schema);
-      writer.write(importText);
-
       const tableText = this.generateTable(schema);
-      writer.write(tableText);
-    });
+      const text = await prettier.format(`${importText}\n${tableText}`, {
+        parser: "babel",
+      });
+
+      writer.write(text);
+    }
   }
 
   private generateImport(schema: SchemaMetadata): string {
@@ -60,7 +64,7 @@ export class PostgresqlSchemaGenerator implements SchemaGenerator {
         ? `,(table) => {
       return {
         ${schema.primaryKey.name}: primaryKey({
-          name: '${schema.primaryKey.name}'
+          name: '${schema.primaryKey.name}',
           columns: [${schema.primaryKey.columns.map((column) => `table.${column}`).join(", ")}],
         }),
       }

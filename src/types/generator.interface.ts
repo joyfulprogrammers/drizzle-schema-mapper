@@ -1,3 +1,3 @@
 export interface SchemaGenerator {
-  generate: () => void;
+  generate: () => Promise<void>;
 }
