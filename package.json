@@ -5,7 +5,11 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prepare": "husky"
+    "prepare": "husky",
+    "sample": "node -r ts-node/register ./bin/cli.ts"
+  },
+  "bin": {
+    "drizzle-schema-mapper": "./bin/cli.js"
   },
   "repository": {
     "type": "git",
@@ -21,6 +25,7 @@
   },
   "homepage": "https://github.com/joyfulprogrammers/drizzle-schema-mapper#readme",
   "devDependencies": {
+    "@commander-js/extra-typings": "^12.0.1",
     "@vitest/coverage-v8": "^1.2.2",
     "drizzle-orm": "^0.29.3",
     "eslint": "^8.56.0",
@@ -34,6 +39,7 @@
     "mikro-orm": "^5.6.2",
     "prettier": "^3.2.4",
     "reflect-metadata": "^0.1.14",
+    "ts-node": "^10.9.2",
     "typeorm": "^0.2.45",
     "typescript": "^5.3.3",
     "vitest": "^1.2.2"
@@ -45,5 +51,8 @@
   },
   "lint-staged": {
     "*.ts": "eslint --fix"
+  },
+  "dependencies": {
+    "commander": "^12.0.0"
   }
 }
