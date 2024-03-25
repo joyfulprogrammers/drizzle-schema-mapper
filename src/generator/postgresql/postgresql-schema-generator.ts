@@ -63,9 +63,8 @@ export class PostgresqlSchemaGenerator implements SchemaGenerator {
       schema.primaryKey != null
         ? `,(table) => {
       return {
-        ${schema.primaryKey.name}: primaryKey({
-          name: '${schema.primaryKey.name}',
-          columns: [${schema.primaryKey.columns.map((column) => `table.${column}`).join(", ")}],
+        primaryKey: primaryKey({
+          columns: [${schema.primaryKey.map((column) => `table.${column}`).join(", ")}],
         }),
       }
     }`

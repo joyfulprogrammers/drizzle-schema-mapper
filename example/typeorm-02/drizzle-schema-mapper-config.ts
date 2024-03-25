@@ -1,3 +1,4 @@
+import { ConstraintSnakeNamingStrategy } from "./src/ConstraintSnakeNamingStrategy";
 import { type Configuration } from "../../src/types/configuration.interface";
 
 export default {
@@ -8,4 +9,5 @@ export default {
   password: "test",
   database: "test",
   entities: ["src/entity/**/*.ts"],
+  namingStrategy: new ConstraintSnakeNamingStrategy(),
 } satisfies Configuration;

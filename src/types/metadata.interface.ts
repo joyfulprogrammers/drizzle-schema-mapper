@@ -1,5 +1,5 @@
 export interface OrmMetadata {
-  databaseType: "pg";
+  databaseType: "postgresql";
   schemas: SchemaMetadata[];
 }
 
@@ -7,7 +7,7 @@ export interface SchemaMetadata {
   tableName: string;
   schemaName: string;
   columns: ColumnMetadata[];
-  primaryKey?: ConstraintMetadata;
+  primaryKey?: string[];
   uniqueKeys: ConstraintMetadata[];
 }
 

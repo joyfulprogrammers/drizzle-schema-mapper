@@ -1,3 +1,5 @@
+import { type NamingStrategyInterface } from "typeorm";
+
 export type Configuration = PostgresConfiguration | MysqlConfiguration;
 
 export interface PostgresConfiguration {
@@ -8,6 +10,7 @@ export interface PostgresConfiguration {
   password: string;
   database: string;
   entities: string[];
+  namingStrategy?: NamingStrategyInterface;
 }
 
 export type MysqlConfiguration = PostgresConfiguration;

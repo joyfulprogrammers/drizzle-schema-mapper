@@ -16,7 +16,7 @@ describe("PostgresqlSchemaGenerator", () => {
   test("should do nothing if there is no schema", async () => {
     // given
     const ormMetadata: OrmMetadata = {
-      databaseType: "pg",
+      databaseType: "postgresql",
       schemas: [],
     };
 
@@ -30,7 +30,7 @@ describe("PostgresqlSchemaGenerator", () => {
   test("should include column type import", async () => {
     // given
     const ormMetadata: OrmMetadata = {
-      databaseType: "pg",
+      databaseType: "postgresql",
       schemas: [
         {
           tableName: "users",
@@ -62,10 +62,7 @@ describe("PostgresqlSchemaGenerator", () => {
               isAutoIncrement: false,
             },
           ],
-          primaryKey: {
-            name: "pk_users",
-            columns: ["id"],
-          },
+          primaryKey: ["id"],
           uniqueKeys: [],
         },
       ],
@@ -93,8 +90,7 @@ describe("PostgresqlSchemaGenerator", () => {
         },
         (table) => {
           return {
-            pk_users: primaryKey({
-              name: "pk_users",
+            primaryKey: primaryKey({
               columns: [table.id],
             }),
           };
